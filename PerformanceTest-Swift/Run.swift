@@ -73,8 +73,8 @@ func run(_ parameters: Parameters) throws -> RunResult {
     result.memInsert = reportMemory("after insert")
 
     var loadedEntities: [TestEntity] = []
-    result.timeLoad = timeElapsed("Bulk load") {
-        loadedEntities = box.all()
+    result.timeLoad = try timeElapsed("Bulk load") {
+        loadedEntities = try box.all()
     }
     _ = timeElapsed("Loop") {
         for _ in loadedEntities {
@@ -107,11 +107,11 @@ func run(_ parameters: Parameters) throws -> RunResult {
     loadedEntities = []
 
     var count: Int = 0
-    result.timeCount = timeElapsed {
-        store.runInReadOnlyTransaction {
+    result.timeCount = try timeElapsed {
+        try store.runInReadOnlyTransaction {
             // Count 10x because values are so low
             for _ in (0 ..< 10) {
-                count = box.count
+                count = try box.count()
             }
         }
     }

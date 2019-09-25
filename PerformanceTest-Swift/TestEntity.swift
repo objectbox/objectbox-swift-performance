@@ -18,7 +18,7 @@ import Foundation
 import ObjectBox
 
 class TestEntity: Entity {
-    var id: Id<TestEntity> = 0
+    var id: EntityId<TestEntity> = 0
     var string: String = ""
     var boolean: Bool = false
     var float: Float = 0
